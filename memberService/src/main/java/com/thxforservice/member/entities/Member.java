@@ -9,10 +9,12 @@ import java.time.LocalDate;
 
 @Data
 @Entity
-public class User extends BaseEntity {
+@Inheritance(strategy = InheritanceType.JOINED)
+public class Member extends BaseEntity {
     @Id
     @GeneratedValue
     private Long memberSeq;
+
     @Column(length=65, unique = true, nullable = false)
     private String email;
 
