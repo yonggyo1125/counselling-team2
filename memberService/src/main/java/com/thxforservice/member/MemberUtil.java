@@ -1,9 +1,9 @@
 package com.thxforservice.member;
 
-import lombok.RequiredArgsConstructor;
 import com.thxforservice.member.constants.Authority;
-import com.thxforservice.member.entities.User;
+import com.thxforservice.member.entities.Member;
 import com.thxforservice.member.repositories.MemberRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -19,23 +19,24 @@ public class MemberUtil {
     }
 
     public boolean isAdmin() {
-        if (isLogin()) {
-
-            return getMember().getAuthority() == Authority.ADMIN;
-        }
-        return false;
+        return isLogin() && getMember().getAuthority() == Authority.ADMIN;
     }
 
-    public User getMember() {
+    public boolean isCounselor() {
+        return isLogin() && getMember().getAuthority() == Authority.COUNSELOR;
+    }
+
+    public boolean isStudent() {
+        return isLogin() && getMember().getAuthority() == Authority.STUDENT;
+    }
+
+    public <T extends Member> T getMember() {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication != null && authentication.isAuthenticated() && authentication.getPrincipal() instanceof MemberInfo memberInfo) {
 
-            User member = repository.findByEmail(memberInfo.getEmail()).orElse(null);
-            memberInfo.setMember(member);
-
-            return member;
+            return (T)memberInfo.getMember();
         }
 
         return null;

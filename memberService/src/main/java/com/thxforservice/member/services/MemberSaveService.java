@@ -2,6 +2,7 @@ package com.thxforservice.member.services;
 
 import com.thxforservice.member.MemberUtil;
 import com.thxforservice.member.constants.Authority;
+import com.thxforservice.member.constants.Status;
 import com.thxforservice.member.controllers.RequestJoin;
 import com.thxforservice.member.controllers.RequestUpdate;
 import com.thxforservice.member.entities.Employee;
@@ -61,9 +62,21 @@ public class MemberSaveService {
 
         // 상담사 추가 정보
         if (member instanceof Employee employee) {
+            employee.setEmpNo(form.getEmpNo());
+            employee.setIntroduction(form.getIntroduction());
+            employee.setSubject(form.getSubject());
+            employee.setRating(form.getRating());
+            employee.setStatus(Status.valueOf(form.getStatus()));
+
+            employeeRepository.saveAndFlush(employee);
 
         } else if (member instanceof Student student){ // 학생 추가 정보
+            student.setStudentNo(form.getStudentNo());
+            student.setGrade(form.getGrade());
+            student.setDepartment(form.getDepartment());
+            student.setStatus(Status.valueOf(form.getStatus()));
 
+            studentRepository.saveAndFlush(student);
         }
     }
 
