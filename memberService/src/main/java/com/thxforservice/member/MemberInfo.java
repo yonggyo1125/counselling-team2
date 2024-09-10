@@ -1,8 +1,8 @@
 package com.thxforservice.member;
 
+import com.thxforservice.member.entities.User;
 import lombok.Builder;
 import lombok.Data;
-import com.thxforservice.member.entities.Member;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -15,7 +15,7 @@ public class MemberInfo implements UserDetails {
     private String email;
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
-    private Member member;
+    private User member;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

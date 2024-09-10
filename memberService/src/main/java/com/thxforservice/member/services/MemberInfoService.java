@@ -6,12 +6,12 @@ import com.thxforservice.global.ListData;
 import com.thxforservice.global.Pagination;
 import com.thxforservice.member.controllers.MemberSearch;
 import com.thxforservice.member.entities.QMember;
+import com.thxforservice.member.entities.User;
 import com.thxforservice.member.repositories.MemberRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import com.thxforservice.member.MemberInfo;
 import com.thxforservice.member.constants.Authority;
-import com.thxforservice.member.entities.Member;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -35,7 +35,7 @@ public class MemberInfoService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        Member member = memberRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException(username));
+        User member = memberRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException(username));
 
 
         Authority authority = Objects.requireNonNullElse(member.getAuthority(), Authority.USER);
@@ -56,7 +56,7 @@ public class MemberInfoService implements UserDetailsService {
      * @return
      */
     @Transactional
-    public ListData<Member> getList(MemberSearch search) {
+    public ListData<User> getList(MemberSearch search) {
         int page = Math.max(search.getPage(), 1);
         int limit = search.getLimit();
         limit = limit < 1 ? 20 : limit;
@@ -81,7 +81,7 @@ public class MemberInfoService implements UserDetailsService {
 
         /* 검색 처리 E */
 
-        List<Member> items = queryFactory.selectFrom(member)
+        List<User> items = queryFactory.selectFrom(member)
                 .fetchJoin()
                 .where(andBuilder)
                 .offset(offset)

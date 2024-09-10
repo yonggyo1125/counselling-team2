@@ -1,11 +1,10 @@
 package com.thxforservice.member.services;
 
-import com.thxforservice.member.constants.Authority;
+import com.thxforservice.member.entities.User;
 import lombok.RequiredArgsConstructor;
 import com.thxforservice.member.MemberUtil;
 import com.thxforservice.member.controllers.RequestJoin;
 import com.thxforservice.member.controllers.RequestUpdate;
-import com.thxforservice.member.entities.Member;
 import com.thxforservice.member.exceptions.MemberNotFoundException;
 import com.thxforservice.member.repositories.MemberRepository;
 import org.modelmapper.ModelMapper;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -30,7 +28,7 @@ public class MemberSaveService {
      * @param form
      */
     public void save(RequestJoin form) {
-        Member member = new ModelMapper().map(form, Member.class);
+        User member = new ModelMapper().map(form, User.class);
         String hash = passwordEncoder.encode(form.getPassword()); // BCrypt 해시화
         member.setPassword(hash);
 
@@ -42,7 +40,7 @@ public class MemberSaveService {
      * @param form
      */
     public void save(RequestUpdate form) {
-        Member member = memberUtil.getMember();
+        User member = memberUtil.getMember();
         String email = member.getEmail();
         member = memberRepository.findByEmail(email).orElseThrow(MemberNotFoundException::new);
         String password = form.getPassword();
@@ -62,7 +60,7 @@ public class MemberSaveService {
         save(member);
     }
 
-    public void save(Member member) {
+    public void save(User member) {
 
         // 휴대전화번호 숫자만 기록
         String mobile = member.getMobile();

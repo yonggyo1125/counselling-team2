@@ -14,7 +14,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import com.thxforservice.member.entities.Member;
+import com.thxforservice.member.entities.User;
 import com.thxforservice.global.exceptions.BadRequestException;
 
 import org.springframework.http.HttpStatus;
@@ -41,7 +41,7 @@ public class MemberController {
     @GetMapping
     @PreAuthorize("isAuthenticated()")
     public JSONData info(@AuthenticationPrincipal MemberInfo memberInfo) {
-        Member member = memberInfo.getMember();
+        User member = memberInfo.getMember();
 
         return new JSONData(member);
     }
