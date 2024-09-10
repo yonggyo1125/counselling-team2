@@ -1,8 +1,10 @@
 package com.thxforservice.member.controllers;
 
 import com.thxforservice.global.Utils;
+import com.thxforservice.global.exceptions.BadRequestException;
 import com.thxforservice.global.rests.JSONData;
 import com.thxforservice.member.MemberInfo;
+import com.thxforservice.member.entities.Member;
 import com.thxforservice.member.jwt.TokenProvider;
 import com.thxforservice.member.services.MemberSaveService;
 import com.thxforservice.member.validators.JoinValidator;
@@ -14,9 +16,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import com.thxforservice.member.entities.User;
-import com.thxforservice.global.exceptions.BadRequestException;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -41,7 +40,7 @@ public class MemberController {
     @GetMapping
     @PreAuthorize("isAuthenticated()")
     public JSONData info(@AuthenticationPrincipal MemberInfo memberInfo) {
-        User member = memberInfo.getMember();
+        Member member = memberInfo.getMember();
 
         return new JSONData(member);
     }

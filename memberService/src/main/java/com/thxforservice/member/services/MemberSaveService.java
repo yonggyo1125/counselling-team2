@@ -1,25 +1,29 @@
 package com.thxforservice.member.services;
 
-import com.thxforservice.member.entities.User;
-import lombok.RequiredArgsConstructor;
 import com.thxforservice.member.MemberUtil;
+import com.thxforservice.member.constants.Authority;
 import com.thxforservice.member.controllers.RequestJoin;
 import com.thxforservice.member.controllers.RequestUpdate;
-import com.thxforservice.member.exceptions.MemberNotFoundException;
+import com.thxforservice.member.entities.Employee;
+import com.thxforservice.member.entities.Member;
+import com.thxforservice.member.entities.Student;
+import com.thxforservice.member.repositories.EmployeeRepository;
 import com.thxforservice.member.repositories.MemberRepository;
-import org.modelmapper.ModelMapper;
+import com.thxforservice.member.repositories.StudentRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
-
-import java.util.UUID;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class MemberSaveService {
     private final MemberRepository memberRepository;
+    private final EmployeeRepository employeeRepository;
+    private final StudentRepository studentRepository;
+
     private final PasswordEncoder passwordEncoder;
     private final MemberUtil memberUtil;
     /**
@@ -28,11 +32,39 @@ public class MemberSaveService {
      * @param form
      */
     public void save(RequestJoin form) {
-        User member = new ModelMapper().map(form, User.class);
-        String hash = passwordEncoder.encode(form.getPassword()); // BCrypt 해시화
-        member.setPassword(hash);
+        Authority authority = StringUtils.hasText(form.getAuthority()) ? Authority.valueOf(form.getAuthority()) : Authority.STUDENT;
 
-        save(member);
+        Member member = null;
+        if (authority == Authority.COUNSELOR) { // 상담원
+            member = new Employee();
+        } else { // 학생
+            member = new Student();
+        }
+
+        /* 공통 항목 처리 S */
+        String hash = passwordEncoder.encode(form.getPassword()); // BCrypt 해시화
+        String mobile = form.getMobile();
+        if (StringUtils.hasText(mobile)) {
+            mobile = mobile.replaceAll("\\D", "");
+        }
+        member.setEmail(form.getEmail());
+        member.setUsername(form.getUsername());
+        member.setPassword(hash);
+        member.setMobile(mobile);
+        member.setBirthdate(form.getBirthDate());
+        member.setAuthority(authority);
+        member.setZonecode(form.getZonecode());
+        member.setAddress(form.getAddress());
+        member.setAddressSub(form.getAddressSub());
+        member.setGid(form.getGid());
+        /* 공통 항목 처리 E */
+
+        // 상담사 추가 정보
+        if (member instanceof Employee employee) {
+
+        } else if (member instanceof Student student){ // 학생 추가 정보
+
+        }
     }
 
     /**
@@ -40,41 +72,8 @@ public class MemberSaveService {
      * @param form
      */
     public void save(RequestUpdate form) {
-        User member = memberUtil.getMember();
-        String email = member.getEmail();
-        member = memberRepository.findByEmail(email).orElseThrow(MemberNotFoundException::new);
-        String password = form.getPassword();
-        String mobile = form.getMobile();
-        if (StringUtils.hasText(mobile)) {
-            mobile = mobile.replaceAll("\\D", "");
-        }
 
-        member.setUserName(form.getUserName());
-        member.setMobile(mobile);
-
-        if (StringUtils.hasText(password)) {
-            String hash = passwordEncoder.encode(password);
-            member.setPassword(hash);
-        }
-
-        save(member);
     }
 
-    public void save(User member) {
 
-        // 휴대전화번호 숫자만 기록
-        String mobile = member.getMobile();
-        if (StringUtils.hasText(mobile)) {
-            mobile = mobile.replaceAll("\\D", "");
-            member.setMobile(mobile);
-        }
-
-        String gid = member.getGid();
-        gid = StringUtils.hasText(gid) ? gid : UUID.randomUUID().toString();
-        member.setGid(gid);
-
-        memberRepository.saveAndFlush(member);
-
-        // 권한 추가, 수정 E
-    }
 }
