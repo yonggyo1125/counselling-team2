@@ -61,6 +61,7 @@ public class MemberController {
         joinValidator.validate(form, errors);
 
         if (errors.hasErrors()) {
+            errors.getAllErrors().forEach(System.out::println);
             throw new BadRequestException(utils.getErrorMessages(errors));
         }
 
