@@ -12,6 +12,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,7 +37,7 @@ public class CounselingController {
      *              - 입력한 email, mobile이 필요
      *              - 신청 가능 여부 체크 필요
      *
-     *  5. 개인 상담 일정 변경
+     *  5. 개인 상담 일정 변경 (상담사)
      *      - 편성된 상담은 empNo로 조회된 상담
      *      - 편성된 상담 일정 목록  GET /cs/list
      *      - 편성된 상담 하나 조회  GET /cs/info/{cSeq}
@@ -94,5 +95,32 @@ public class CounselingController {
         // 서비스 연동 ..
 
         return null;
+    }
+
+    @Operation(summary = "편성된 상담 일정 목록", method="GET")
+    @ApiResponse(responseCode = "200")
+    @GetMapping("/cs/list")
+    @PreAuthorize("hasAnyAuthority('COUNSELOR')")
+    public JSONData csList(@ModelAttribute CounselingSearch search) {
+
+        return null;
+    }
+
+    @Operation(summary = "편성된 상담 하나 조회", method="GET")
+    @ApiResponse(responseCode = "200")
+    @GetMapping("/cs/info/{cSeq}")
+    @PreAuthorize("hasAnyAuthority('COUNSELOR')")
+    public JSONData csInfo(@PathVariable("cSeq") Long cSeq) {
+
+        return null;
+    }
+
+    // 편성된 상담 변경 처리  PATCH /cs/change
+
+    @Operation(summary="편성된 상담 변경 처리", method="PATCH")
+    @ApiResponse(responseCode = "200")
+    @PatchMapping("/cs/change")
+    public void csChange() {
+
     }
 }
