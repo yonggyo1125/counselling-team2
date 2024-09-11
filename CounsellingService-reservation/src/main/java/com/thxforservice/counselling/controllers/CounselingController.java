@@ -155,4 +155,11 @@ public class CounselingController {
 
     }
 
+    @Operation(summary = "상담사 평점 - 개인 상담, 집단 상담")
+    @GetMapping("/rating")
+    @PreAuthorize("hasAnyAuthority('COUNSELOR')")
+    public JSONData getRating() {
+
+        return null;
+    }
 }
