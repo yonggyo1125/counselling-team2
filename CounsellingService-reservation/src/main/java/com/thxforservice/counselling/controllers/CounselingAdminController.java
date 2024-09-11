@@ -36,6 +36,7 @@ public class CounselingAdminController {
      *
      *
      */
+    // 집단 상담 S 
     @Operation(summary = "집단 상담 프로그램 추가", method = "POST")
     @PostMapping("/group")
     public ResponseEntity<Void> register() {
@@ -79,6 +80,21 @@ public class CounselingAdminController {
     @GetMapping("/group/apply/{pgmRegSeq}")
     public JSONData applyInfo(@PathVariable("pgmRegSeq") Long pgmReqSeq) {
         
+        return null;
+    }
+    
+    // 집단 상담 E 
+    
+    // 개별 상담 S
+    @Operation(summary = "개별 상담 신청 목록")
+    @GetMapping("/apply")
+    public JSONData privateApplyList() {
+        return null;
+    }
+    
+    @Operation(summary = "개별 상담 신청 정보")
+    @GetMapping("/apply/{cSeq}")
+    public JSONData privateApplyInfo(@PathVariable("cSeq") Long cSeq) {
         return null;
     }
 }
