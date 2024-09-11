@@ -1,5 +1,7 @@
 package com.thxforservice.counselling.controllers;
 
+import com.thxforservice.global.rests.JSONData;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -34,12 +36,13 @@ public class CounselingAdminController {
      *
      *
      */
-
+    @Operation(summary = "집단 상담 프로그램 추가", method = "POST")
     @PostMapping("/group")
     public ResponseEntity<Void> register() {
         return save();
     }
 
+    @Operation(summary = "집단 상담 프로그램 수정", method = "PATCH")
     @PatchMapping("/group/update/{pgmSeq}")
     public ResponseEntity<Void> update(@PathVariable("pgmSeq") Long pgmSeq) {
         return save();
@@ -51,5 +54,31 @@ public class CounselingAdminController {
         HttpStatus status = request.getMethod().toUpperCase().equals("POST") ? HttpStatus.CREATED : HttpStatus.OK;
 
         return ResponseEntity.status(status).build();
+    }
+    
+    @Operation(summary = "집단 상담 프로그램 삭제")
+    @DeleteMapping("/group/{pgmSeq}")
+    public void delete(@PathVariable("pgmSeq") Long pgmSeq) {
+        
+    }
+
+    @Operation(summary = "집단 상담 프로그램 목록")
+    @GetMapping("/group")
+    public JSONData groupList() {
+
+        return null;
+    }
+    
+    @Operation(summary = "집단 상담 신청 목록")
+    @GetMapping("/group/apply")
+    public JSONData applyList() {
+        return null;
+    }
+
+    @Operation(summary = "집단 상담 신청 정보 한개 조회")
+    @GetMapping("/group/apply/{pgmRegSeq}")
+    public JSONData applyInfo(@PathVariable("pgmRegSeq") Long pgmReqSeq) {
+        
+        return null;
     }
 }
