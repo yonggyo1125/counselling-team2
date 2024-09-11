@@ -1,10 +1,10 @@
 package com.thxforservice.counselling.controllers;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
@@ -23,7 +23,7 @@ public class RequestGroupCounseling {
     private Boolean attend; // 참석 여부
 
     @NotNull
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate reservationDate;
 
     @Min(value = 5, message = "5명이상 신청 시에만 상담이 진행됩니다.")

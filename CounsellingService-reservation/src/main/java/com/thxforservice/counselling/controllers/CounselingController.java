@@ -1,18 +1,25 @@
 package com.thxforservice.counselling.controllers;
 
+import com.thxforservice.global.Utils;
+import com.thxforservice.global.exceptions.BadRequestException;
+import com.thxforservice.global.rests.JSONData;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.*;
 
 @Tag(name="Counseling", description = "상담 API")
 @RestController
 @RequiredArgsConstructor
 public class CounselingController {
+    private final Utils utils;
     /**
      *  1. 개인 상담 신청  - POST /apply
      *  2. 집단 상담 하나 정보  - GET /group/info/{pgmSeq}
@@ -41,10 +48,51 @@ public class CounselingController {
     @Operation(summary = "개인 상담 신청", method="POST")
     @ApiResponse(responseCode = "201")
     @PostMapping("/apply")
-    public ResponseEntity<Void> apply() {
+    public ResponseEntity<Void> apply(@Valid @RequestBody RequestCounselingApply form, Errors errors) {
+
+        // 추가 검증 - validator
+
+        if (errors.hasErrors()) {
+            throw new BadRequestException(utils.getErrorMessages(errors));
+        }
+
+        // 서비스 추가
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    @Operation(summary = "집단 상담 정보 하나 조회", method = "GET")
+    @ApiResponse(responseCode = "200")
+    @Parameter(name="pgmSeq", required = true, description = "경로변수, 집단 상담 정보 등록 번호")
+    @GetMapping("/group/info/{pgmSeq}")
+    public JSONData groupInfo(@PathVariable("pgmSeq") Long pgmSeq) {
 
+        return null;
+    }
+
+    @Operation(summary = "집단 상담 정보 목록", method="GET")
+    @ApiResponse(responseCode = "200")
+    @GetMapping("/group")
+    public JSONData groupList(@ModelAttribute GroupCounselingSearch search) {
+
+        return null;
+    }
+
+    @Operation(summary = "집단 상담 신청", method = "POST")
+    @ApiResponse(responseCode = "201")
+    @Parameters({
+
+    })
+    @PostMapping("/group/apply")
+    public ResponseEntity<Void> groupApply(@Valid @RequestBody RequestGroupCounselingApply form, Errors errors) {
+
+        // 추가 검증 - validator
+        if (errors.hasErrors()) {
+            throw new BadRequestException(utils.getErrorMessages(errors));
+        }
+
+        // 서비스 연동 ..
+
+        return null;
+    }
 }
