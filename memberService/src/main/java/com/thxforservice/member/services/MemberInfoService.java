@@ -91,6 +91,16 @@ public class MemberInfoService implements UserDetailsService {
 
         }
 
+        List<String> email = search.getEmail();
+        if (email != null && !email.isEmpty()) {
+            andBuilder.and(member.email.in(email));
+        }
+
+        List<String> authority = search.getAuthority();
+        if (authority != null && !authority.isEmpty()) {
+            List<Authority> authorities = authority.stream().map(Authority::valueOf).toList();
+            andBuilder.and(member.authority.in(authorities));
+        }
         /* 검색 처리 E */
 
         List<Member> items = queryFactory.selectFrom(member)
