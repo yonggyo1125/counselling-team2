@@ -7,10 +7,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Tag(name="Survey", description = "설문 API")
 @RestController
@@ -63,9 +60,20 @@ public class SurveyController {
         return null;
     }
 
+    @Operation(summary = "답변 상세 내용", method="GET")
+    @ApiResponse(responseCode = "200")
+    @Parameter(name="prgrsNo", required = true, description = "경로변수, 답변 등록 번호")
     @GetMapping("/answer/{prgrsNo}")
     public JSONData answer(@PathVariable("prgrsNo") Long prgrsNo) {
 
         return null;
+    }
+
+    @Operation(summary = "답변 삭제", method = "DELETE")
+    @ApiResponse(responseCode = "200")
+    @Parameter(name="prgrsNo", required = true, description = "경로변수, 답변 등록 번호")
+    @DeleteMapping("/{prgrsNo}")
+    public void delete(@PathVariable("prgrsNo") Long prgrsNo) {
+
     }
 }
