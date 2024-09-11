@@ -19,6 +19,35 @@ public class QSurveyInfo extends EntityPathBase<SurveyInfo> {
 
     public static final QSurveyInfo surveyInfo = new QSurveyInfo("surveyInfo");
 
+    public final com.thxforservice.global.entities.QBaseMemberEntity _super = new com.thxforservice.global.entities.QBaseMemberEntity(this);
+
+    //inherited
+    public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
+
+    //inherited
+    public final StringPath createdBy = _super.createdBy;
+
+    public final StringPath criteriaInfo = createString("criteriaInfo");
+
+    //inherited
+    public final DateTimePath<java.time.LocalDateTime> deletedAt = _super.deletedAt;
+
+    //inherited
+    public final DateTimePath<java.time.LocalDateTime> modifiedAt = _super.modifiedAt;
+
+    //inherited
+    public final StringPath modifiedBy = _super.modifiedBy;
+
+    public final StringPath srvyExpln = createString("srvyExpln");
+
+    public final StringPath srvyNm = createString("srvyNm");
+
+    public final NumberPath<Long> srvyNo = createNumber("srvyNo", Long.class);
+
+    public final StringPath srvyReqHr = createString("srvyReqHr");
+
+    public final BooleanPath srvyUse = createBoolean("srvyUse");
+
     public QSurveyInfo(String variable) {
         super(SurveyInfo.class, forVariable(variable));
     }
