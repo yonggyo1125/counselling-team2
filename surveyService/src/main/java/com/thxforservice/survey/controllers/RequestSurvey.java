@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Data
@@ -27,7 +28,7 @@ public class RequestSurvey {
 
     private String srvyExpln;
 
-    private String criteriaInfo;
+    private List<Map<String, String>> criteriaInfo;
 
     private List<SurveyQuestion> questions;
 }

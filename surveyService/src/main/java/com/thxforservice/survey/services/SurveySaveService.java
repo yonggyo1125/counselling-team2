@@ -1,5 +1,7 @@
 package com.thxforservice.survey.services;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thxforservice.survey.controllers.RequestSurvey;
 import com.thxforservice.survey.entities.QSurveyQuestion;
 import com.thxforservice.survey.entities.SurveyInfo;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 //설문지 등록, 수정
@@ -23,6 +26,7 @@ public class SurveySaveService {
 
     private final SurveyInfoRepository infoRepository;
     private final SurveyQuestionRepository questionRepository;
+    private final ObjectMapper om;
     private final ModelMapper modelMapper;
 
     public void save(RequestSurvey form) {
@@ -39,7 +43,14 @@ public class SurveySaveService {
             data.setSrvyUse(form.getSrvyUse());
             data.setSrvyReqHr(form.getSrvyReqHr());
             data.setSrvyExpln(form.getSrvyExpln());
-            data.setCriteriaInfo(form.getCriteriaInfo());
+            List<Map<String, String>> _criteriaInfo = form.getCriteriaInfo();
+            if (_criteriaInfo != null) {
+                try {
+                    data.setCriteriaInfo(om.writeValueAsString(_criteriaInfo));
+                } catch (JsonProcessingException e) {
+                    e.printStackTrace();
+                }
+            }
 
             // 기 등록된 문항 데이터 삭제
             List<SurveyQuestion> formerItems = (List<SurveyQuestion>)questionRepository.findAll(surveyQuestion.surveyInfo.srvyNo.eq(srvyNo));
