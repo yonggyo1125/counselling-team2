@@ -2,6 +2,7 @@ package com.thxforservice.survey.controllers;
 
 import com.thxforservice.global.Utils;
 import com.thxforservice.global.exceptions.BadRequestException;
+import com.thxforservice.survey.services.SurveySaveService;
 import com.thxforservice.survey.validators.SurveyValidator;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class SurveyAdminController {
 
+    private final SurveySaveService surveySaveService;
     private final SurveyValidator surveyValidator;
     private final HttpServletRequest request;
     private final Utils utils;
@@ -37,6 +39,7 @@ public class SurveyAdminController {
         }
 
         // 추가, 수정 처리
+        surveySaveService.save(form);
 
         HttpStatus status = method.equals("POST") ? HttpStatus.CREATED : HttpStatus.OK;
         return ResponseEntity.status(status).build();
