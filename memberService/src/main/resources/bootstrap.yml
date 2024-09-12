@@ -1,7 +1,0 @@
-spring:
-  application:
-    name: memberservice
-
-  cloud:
-    config:
-      uri: ${configServerUrl}

@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name="SRVY_QITEM_INFO")
+@Table(name="SRVY_QITEM_INFO") //한 질문당
 public class SurveyQuestion {
     @Id @GeneratedValue
     @Column(name="srvyQitemNo")
@@ -16,12 +16,13 @@ public class SurveyQuestion {
     private SurveyInfo surveyInfo;
 
     @Column(name="srvyQItemTTL")
-    private String title;
+    private String title; // 질문
 
     @Column(name="srvyQItemNowUseYN")
     private Boolean use;
 
-    // 문항1....^^1||문항2......^^2||문항3...^^3
+
+    // 문항1....^^1점||문항2......^^2점||문항3...^^3점
     @Lob
-    private String questions; // 문항
+    private String questions; // 문항, 문항의 점수 json
 }

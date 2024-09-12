@@ -1,15 +1,17 @@
 package com.thxforservice.survey.entities;
 
+import com.thxforservice.global.entities.BaseMemberEntity;
 import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
 @Entity
 @Table(name="SRVY_ANS_RSLT")
-public class SurveyResult {
+public class SurveyResult extends BaseMemberEntity {
+
     @Id @GeneratedValue
     @Column(name="srvyPrgrsNo")
-    private Long prgrsNo;
+    private Long prgrsNo; // SurveyResult
 
     @JoinColumn(name="srvyNo")
     @ManyToOne(fetch=FetchType.LAZY)
@@ -24,8 +26,9 @@ public class SurveyResult {
     private String username; // 로그인 회원명
 
     @Lob
-    private String answerData; // 학생이 답한 질문 데이터
+    private String answerData; // 학생이 답한 질문 데이터 json?
 
     private Long totScr; // 총 점수
+
 
 }

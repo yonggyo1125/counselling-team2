@@ -3,7 +3,12 @@ package com.thxforservice.survey.repositories;
 import com.thxforservice.survey.entities.SurveyInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
+import org.springframework.stereotype.Repository;
 
-public interface SurveyInfoRepository extends JpaRepository<SurveyInfo, Long>, QuerydslPredicateExecutor<SurveyInfo> {
+import java.util.Optional;
 
+@Repository
+public interface SurveyInfoRepository extends JpaRepository<SurveyInfo, Long> , QuerydslPredicateExecutor<SurveyInfo> {
+
+    Optional<SurveyInfo> findBySrvyNo(Long srvyNo);
 }

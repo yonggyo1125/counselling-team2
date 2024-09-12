@@ -16,6 +16,7 @@ public class Pagination {
     private int total;
     private int ranges;
     private int limit;
+    private HttpServletRequest request;
 
     private int firstRangePage; // 구간별 첫 페이지
     private int lastRangePage; // 구간별 마지막 페이지
@@ -109,5 +110,12 @@ public class Pagination {
                         baseURL + "page=" + p})
                 .toList();
 
+    }
+
+    public Pagination(int page, int total, int limit, HttpServletRequest request) {
+        this.page = page;
+        this.total = total;
+        this.limit = limit;
+        this.request = request;
     }
 }

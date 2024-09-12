@@ -1,6 +1,0 @@
-spring:
-  application:
-    name: reservationservice
-  cloud:
-    config:
-      uri: ${configServerUrl}

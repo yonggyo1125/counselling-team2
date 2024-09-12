@@ -15,4 +15,10 @@ public class JSONData {
     public JSONData(Object data) {
         this.data = data;
     }
+
+    public JSONData(boolean success, String message, Object data) {
+        this.success = success;
+        this.message = message;
+        this.data = data;
+    }
 }
