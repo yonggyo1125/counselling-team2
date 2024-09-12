@@ -28,6 +28,7 @@ public class SurveyAdminController {
     public ResponseEntity<Void> saveSurvey(@Valid @RequestBody RequestSurvey form, Errors errors) {
 
         String method = request.getMethod().toUpperCase();
+        form.setMode(method.equals("PATCH") ? "update" : "write");
 
         surveyValidator.validate(form, errors);
 
