@@ -1,23 +1,30 @@
 package com.thxforservice.survey.controllers;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.thxforservice.survey.entities.SurveyQuestion;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class RequestSurvey {
 
-    private Long srvyNo;
-    private String mode = "write"; // write :  작성, update -  수정
+    private Long srvyNo; // 수정시 필요
+
+    private String mode;
 
     @NotBlank
     private String srvyNm; // 검사 이름
 
     private Boolean srvyUse; // 검사 사용 여부
 
+    private String srvyReqHr;
 
-    private String srvyReqHr; // 검사 소요시간
+    private String srvyExpln;
 
+    private String criteriaInfo;
 
-    private String srvyExpln; // 검사 설명
-
+    private List<SurveyQuestion> questions;
 }

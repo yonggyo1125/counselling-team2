@@ -3,22 +3,12 @@ package com.thxforservice.survey.services.answer;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thxforservice.member.MemberUtil;
-import com.thxforservice.member.exceptions.MemberNotFoundException;
 import com.thxforservice.survey.controllers.RequestAnswer;
-import com.thxforservice.survey.entities.SurveyInfo;
 import com.thxforservice.survey.entities.SurveyQuestion;
-import com.thxforservice.survey.entities.SurveyResult;
-import com.thxforservice.survey.exceptions.SurveyInfoNotFoundException;
-import com.thxforservice.survey.exceptions.SurveyQuestionNotFoundException;
-import com.thxforservice.survey.exceptions.SurveyResultNotFoundException;
 import com.thxforservice.survey.repositories.SurveyQuestionRepository;
 import com.thxforservice.survey.repositories.SurveyResultRepository;
-import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -33,6 +23,7 @@ private final MemberUtil memberUtil;
 private ObjectMapper objectMapper;
 
     public void process(RequestAnswer form) {
+        /*
         if (!memberUtil.isLogin()) {
             throw new MemberNotFoundException(); // Make sure this exception is defined
         }
@@ -78,6 +69,8 @@ private ObjectMapper objectMapper;
 
         // Save and flush the survey result to the database
         sResultRepository.saveAndFlush(data);
+
+         */
 }
 
     private int calculateTotalScore(String answerData, List<SurveyQuestion> questions) {

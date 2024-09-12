@@ -1,10 +1,12 @@
 package com.thxforservice.survey.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
 @Entity
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Table(name="SRVY_QITEM_INFO") //한 질문당
 public class SurveyQuestion {
     @Id @GeneratedValue
