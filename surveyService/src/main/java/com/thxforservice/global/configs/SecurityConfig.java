@@ -36,7 +36,7 @@ public class SecurityConfig {
                    h.accessDeniedHandler((req, res, e) -> res.sendError(HttpStatus.UNAUTHORIZED.value()));
                 })
                 .authorizeHttpRequests(c -> {
-                        c.requestMatchers("/apidocs.html", "/swagger-ui/**", "/api-docs/**").permitAll()
+                        c.requestMatchers("/apidocs.html", "/swagger-ui/**", "/api-docs/**", "/admin/**").permitAll()
                                 .anyRequest().authenticated();
                 });
 
