@@ -22,9 +22,26 @@ public class QSurveyResult extends EntityPathBase<SurveyResult> {
 
     public static final QSurveyResult surveyResult = new QSurveyResult("surveyResult");
 
+    public final com.thxforservice.global.entities.QBaseMemberEntity _super = new com.thxforservice.global.entities.QBaseMemberEntity(this);
+
     public final StringPath answerData = createString("answerData");
 
+    //inherited
+    public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
+
+    //inherited
+    public final StringPath createdBy = _super.createdBy;
+
+    //inherited
+    public final DateTimePath<java.time.LocalDateTime> deletedAt = _super.deletedAt;
+
     public final StringPath email = createString("email");
+
+    //inherited
+    public final DateTimePath<java.time.LocalDateTime> modifiedAt = _super.modifiedAt;
+
+    //inherited
+    public final StringPath modifiedBy = _super.modifiedBy;
 
     public final NumberPath<Long> prgrsNo = createNumber("prgrsNo", Long.class);
 
