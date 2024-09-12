@@ -18,6 +18,9 @@ public class SurveyInfo extends BaseMemberEntity {
     @Id @GeneratedValue
     private Long srvyNo;
 
+    @Column(length=45)
+    private String gid;
+
     @Column(nullable = false)
     private String srvyNm; // 검사 이름
 
