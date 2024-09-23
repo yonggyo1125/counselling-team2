@@ -28,8 +28,6 @@ public class CorsFilterConfig {
         CorsConfiguration config = new CorsConfiguration();
         config.addAllowedMethod("*"); // 모든 요청 메서드 허용
         config.addAllowedHeader("*"); // 모든 요청 헤더 허용
-        System.out.println("allowedOrigins:" + allowedOrigins);
-
         if (StringUtils.hasText(allowedOrigins)) {
             List<String> origins = Arrays.stream(allowedOrigins.split(",")).toList();
             config.setAllowedOrigins(origins);
