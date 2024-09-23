@@ -30,8 +30,6 @@ public class QSurveyQuestion extends EntityPathBase<SurveyQuestion> {
 
     public final StringPath title = createString("title");
 
-    public final BooleanPath use = createBoolean("use");
-
     public QSurveyQuestion(String variable) {
         this(SurveyQuestion.class, forVariable(variable), INITS);
     }
