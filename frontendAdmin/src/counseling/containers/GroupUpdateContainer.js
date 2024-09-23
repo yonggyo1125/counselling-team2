@@ -7,6 +7,7 @@ import React, {
 } from 'react';
 import { getCommonActions } from '@/commons/contexts/CommonContext';
 import GroupProgramForm from '../components/GroupProgramForm';
+import { useRouter } from 'next/navigation';
 import {
   apiRegisterGroupCounseling,
   apiUpdateGroupCounseling,
@@ -18,6 +19,7 @@ const initialForm = {
   pgmNm: '',
   description: '',
   programStartDate: '',
+  programStartTime: '',
   startDate: '',
   endDate: '',
   capacity: 5,
@@ -38,6 +40,8 @@ const GroupUpdateContainer = ({ params }) => {
   const [form, setForm] = useState(initialForm);
   const [errors, setErrors] = useState({});
 
+  const router = useRouter();
+
   const onChange = useCallback((e) => {
     setForm((form) => ({ ...form, [e.target.name]: e.target.value }));
   }, []); // 입력할때마다 change형태의 이벤트 발생 (name, value 속성을 통해 form 업데이트)
@@ -51,21 +55,29 @@ const GroupUpdateContainer = ({ params }) => {
   const onSubmit = useCallback(
     (e) => {
       e.preventDefault();
-      console.log('form', form);
-      return;
+
+      /* 유효성 검사 S */
+
+      /* 유효성 검사 E */
+
       (async () => {
         try {
           if (pgmSeq) {
             // 프로그램 수정
             await apiUpdateGroupCounseling(pgmSeq, form);
-            console.log('프로그램 수정 완료');
           } else {
             // 프로그램 등록
             await apiRegisterGroupCounseling(form);
-            console.log('프로그램 등록 완료');
           }
+
+          // 프로그램 목록 이동
+          router.replace('/counseling/group');
         } catch (error) {
-          console.error('저장 실패:', error);
+          const message = error.message;
+          setErrors(
+            typeof message === 'string' ? { global: [message] } : message,
+          );
+
           // 에러 처리 로직 추가
         }
       })();

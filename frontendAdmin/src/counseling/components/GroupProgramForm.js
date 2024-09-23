@@ -92,6 +92,18 @@ const GroupProgramForm = ({
         </dd>
       </dl>
       <dl>
+        <dt>{t('프로그램 시작시간')}</dt>
+        <dd>
+          <StyledInput
+            type="text"
+            name="programStartTime"
+            value={form?.programStartTime ?? ''}
+            onChange={onChange}
+            required
+          />
+        </dd>
+      </dl>
+      <dl>
         <dt>{t('신청 시작일')}</dt>
         <dd>
           <StyledInput
