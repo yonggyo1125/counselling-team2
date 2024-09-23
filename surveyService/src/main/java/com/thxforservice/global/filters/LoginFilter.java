@@ -57,9 +57,8 @@ public class LoginFilter extends GenericFilterBean {
     private void loginProcess(String token) {
 
         try {
-            String apiUrl = utils.url("/account", "member-service");
+            String apiUrl = utils.url("/account", "memberservice");
             // api서버 주소/account
-
             HttpHeaders headers = new HttpHeaders();
             headers.setBearerAuth(token);
             HttpEntity<Void> entity = new HttpEntity<>(headers);
