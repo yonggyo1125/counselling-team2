@@ -39,6 +39,8 @@ public class QSurveyResult extends EntityPathBase<SurveyResult> {
 
     public final NumberPath<Long> prgrsNo = createNumber("prgrsNo", Long.class);
 
+    public final StringPath resultDescription = createString("resultDescription");
+
     public final QSurveyInfo surveyInfo;
 
     public final NumberPath<Long> totScr = createNumber("totScr", Long.class);

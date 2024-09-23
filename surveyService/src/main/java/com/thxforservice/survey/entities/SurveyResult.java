@@ -36,6 +36,9 @@ public class SurveyResult extends BaseEntity {
 
     private Long totScr; // 총 점수
 
+    @Lob
+    private String resultDescription; // 결과 설명
+
     @Transient
-    public List<Map<Long, Integer>> _answerData;
+    public List<Map<Long, Integer>> answers;
 }

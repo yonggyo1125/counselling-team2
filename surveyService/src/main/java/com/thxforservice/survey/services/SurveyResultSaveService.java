@@ -6,9 +6,8 @@ import com.thxforservice.member.MemberUtil;
 import com.thxforservice.member.entities.Member;
 import com.thxforservice.survey.controllers.RequestAnswer;
 import com.thxforservice.survey.entities.SurveyInfo;
+import com.thxforservice.survey.entities.SurveyQuestion;
 import com.thxforservice.survey.entities.SurveyResult;
-import com.thxforservice.survey.exceptions.SurveyInfoNotFoundException;
-import com.thxforservice.survey.repositories.SurveyInfoRepository;
 import com.thxforservice.survey.repositories.SurveyResultRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,7 +18,7 @@ import java.util.Map;
 @Service
 @RequiredArgsConstructor
 public class SurveyResultSaveService {
-    private final SurveyInfoRepository infoRepository;
+    private final SurveyInfoService infoService;
     private final SurveyResultRepository resultRepository;
     private final MemberUtil memberUtil;
     private final ObjectMapper om;
@@ -27,7 +26,8 @@ public class SurveyResultSaveService {
     public void save(RequestAnswer form) {
         Member member = memberUtil.getMember();
         Long srvyNo = form.getSrvyNo();
-        SurveyInfo surveyInfo = infoRepository.findById(srvyNo).orElseThrow(SurveyInfoNotFoundException::new);
+        SurveyInfo surveyInfo = infoService.get(srvyNo);
+        List<SurveyQuestion> qItems = surveyInfo.getQuestions();
 
         SurveyResult surveyResult = SurveyResult.builder()
                 .email(member.getEmail())
@@ -41,16 +41,52 @@ public class SurveyResultSaveService {
             try {
                 String answerData = om.writeValueAsString(answers);
                 surveyResult.setAnswerData(answerData);
-                surveyResult.setTotScr(getScore(srvyNo, answers));
+                Long totScr = getScore(answers, qItems);
+                surveyResult.setTotScr(totScr);
+
+                /* 점수별 설문 결과 설명 */
+                Map<String, String> result  = null;
+                List<Map<String, String>> criteriaInfo = surveyInfo.get_criteriaInfo();
+                for (Map<String, String> data : criteriaInfo) {
+                    String[] range = data.get("range").split("_");
+                    long rangeStart = Long.parseLong(range[0]);
+                    long rangeEnd = Long.parseLong(range[1]);
+                    if (totScr >= rangeStart && totScr <= rangeEnd) {
+                        result = data;
+                        break;
+                    }
+                }
+
+                if (result != null) {
+                    String resultDescription = om.writeValueAsString(result);
+                    surveyResult.setResultDescription(resultDescription);
+                }
+
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
             }
         }
+
+        resultRepository.saveAndFlush(surveyResult);
     }
 
-    public Long getScore(Long srvyNo, List<Map<Long, Integer>> answerData) {
+    public Long getScore(List<Map<Long, Integer>> answerData, List<SurveyQuestion> qItems) {
+        long score = 0L;
+        for (Map<Long, Integer> answer : answerData) {
+            for (Map.Entry<Long, Integer> entry : answer.entrySet()) {
+                Long itemNo = entry.getKey();
+                Integer answerNo = entry.getValue();
+                SurveyQuestion item = qItems.stream().filter(i -> i.getItemNo().equals(itemNo)).findFirst().orElse(null);
+                if (item != null) {
+                    List<Map<String, Object>> data = item.get_questions();
+                    Map<String, Object> _data = data.get(answerNo);
+                    long _score = (long)_data.get("score");
+                    score += _score;
+                }
+            } // endfor
+        } // endfor
 
 
-        return 0L;
+        return score;
     }
 }

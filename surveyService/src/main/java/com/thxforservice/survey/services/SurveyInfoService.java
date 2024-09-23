@@ -23,6 +23,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -87,6 +89,23 @@ public class SurveyInfoService {
         /* 설문지 가져오기 S */
         QSurveyQuestion surveyQuestion = QSurveyQuestion.surveyQuestion;
         List<SurveyQuestion> qItems = (List<SurveyQuestion>)questionRepository.findAll(surveyQuestion.surveyInfo.srvyNo.eq(item.getSrvyNo()), Sort.by(asc("itemNo")));
+
+
+        if (qItems != null && !qItems.isEmpty()) {
+            for (SurveyQuestion qItem : qItems) {
+                String[] questions = qItem.getQuestions().split("\\|\\|");
+                List<Map<String, Object>> _questions = new ArrayList<>();
+                for (String _qItem : questions) {
+                    String[] _q = _qItem.split("\\^\\^");
+
+                    Map<String, Object> data = new HashMap<>();
+                    data.put("question", _q[0]);
+                    data.put("score", Integer.parseInt(_q[1]));
+                    _questions.add(data);
+                }
+                qItem.set_questions(_questions);
+            }
+        }
 
         item.setQuestions(qItems);
         /* 설문지 가져오기 E */
