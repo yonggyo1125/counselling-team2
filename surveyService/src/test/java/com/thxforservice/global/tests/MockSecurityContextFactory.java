@@ -20,7 +20,7 @@ public class MockSecurityContextFactory implements WithSecurityContextFactory<Mo
         member.setMemberSeq(1L);
         member.setEmail(mockMember.email());
         member.setPassword(encoder.encode(mockMember.password()));
-        member.setUserName(mockMember.userName());
+        member.setUsername(mockMember.userName());
         member.setMobile(mockMember.mobile());
         member.setGid(mockMember.gid());
 

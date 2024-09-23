@@ -7,7 +7,6 @@ import lombok.Data;
 
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -15,14 +14,8 @@ public class RequestSurvey {
 
     private Long srvyNo; // 수정시 필요
 
-    private String mode;
-
-    private String gid = UUID.randomUUID().toString();
-
     @NotBlank
     private String srvyNm; // 검사 이름
-
-    private Boolean srvyUse; // 검사 사용 여부
 
     private String srvyReqHr;
 
