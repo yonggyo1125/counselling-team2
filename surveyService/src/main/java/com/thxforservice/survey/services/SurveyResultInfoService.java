@@ -1,7 +1,7 @@
 package com.thxforservice.survey.services;
 
-import com.thxforservice.global.CommonSearch;
 import com.thxforservice.global.ListData;
+import com.thxforservice.survey.controllers.AnswerSearch;
 import com.thxforservice.survey.entities.SurveyResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,7 @@ public class SurveyResultInfoService {
         return null;
     }
 
-    public ListData<SurveyResult> getList(CommonSearch search) {
+    public ListData<SurveyResult> getList(AnswerSearch search) {
 
         return null;
     }

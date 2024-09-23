@@ -5,11 +5,13 @@ import com.thxforservice.global.ListData;
 import com.thxforservice.global.Utils;
 import com.thxforservice.global.exceptions.BadRequestException;
 import com.thxforservice.global.rests.JSONData;
+import com.thxforservice.member.MemberUtil;
+import com.thxforservice.member.entities.Member;
 import com.thxforservice.survey.entities.SurveyInfo;
+import com.thxforservice.survey.entities.SurveyResult;
 import com.thxforservice.survey.services.SurveyInfoService;
 import com.thxforservice.survey.services.SurveyResultInfoService;
 import com.thxforservice.survey.services.SurveyResultSaveService;
-import com.thxforservice.survey.services.SurveySaveService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -18,9 +20,10 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Tag(name = "Survey", description = "설문 API")
 @RestController
@@ -28,11 +31,10 @@ import org.springframework.web.bind.annotation.*;
 public class SurveyController {
 
     private final SurveyInfoService surveyInfoService;
-    private final SurveySaveService surveySaveService;
     private final SurveyResultInfoService resultInfoService;
     private final SurveyResultSaveService resultSaveService;
+    private final MemberUtil memberUtil;
     private final Utils utils;
-
 
 
     /**
@@ -92,8 +94,13 @@ public class SurveyController {
     @Operation(summary = "답변한 설문지 목록", method = "GET")
     @ApiResponse(responseCode = "200")
     @GetMapping("/answers")
-    public JSONData myAnswers(@ModelAttribute CommonSearch search, Model model) {
-        return null;
+    public JSONData myAnswers(@ModelAttribute AnswerSearch search) {
+        Member member = memberUtil.getMember();
+        search.setEmail(List.of(member.getEmail()));
+
+        ListData<SurveyResult> data = resultInfoService.getList(search);
+
+        return new JSONData(data);
     }
 
     @Operation(summary = "답변 상세 내용", method = "GET")
@@ -102,7 +109,9 @@ public class SurveyController {
     @GetMapping("/answer/{prgrsNo}")
     public JSONData answer(@PathVariable("prgrsNo") Long prgrsNo) {
 
-       return null;
+        SurveyResult data = resultInfoService.get(prgrsNo);
+
+       return new JSONData(data);
     }
 
 

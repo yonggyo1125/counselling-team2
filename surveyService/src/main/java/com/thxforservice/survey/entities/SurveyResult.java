@@ -1,8 +1,9 @@
 package com.thxforservice.survey.entities;
 
-import com.thxforservice.global.entities.BaseMemberEntity;
+import com.thxforservice.global.entities.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,9 +12,10 @@ import java.util.Map;
 
 @Data
 @Entity
+@Builder
 @NoArgsConstructor @AllArgsConstructor
 @Table(name="SRVY_ANS_RSLT")
-public class SurveyResult extends BaseMemberEntity {
+public class SurveyResult extends BaseEntity {
 
     @Id @GeneratedValue
     @Column(name="srvyPrgrsNo")
@@ -23,7 +25,8 @@ public class SurveyResult extends BaseMemberEntity {
     @ManyToOne(fetch=FetchType.LAZY)
     private SurveyInfo surveyInfo;
 
-    private Long studentNo;
+    @Column(length=80, nullable = false)
+    private String email;
 
     @Column(length=40, nullable = false)
     private String username; // 로그인 회원명
