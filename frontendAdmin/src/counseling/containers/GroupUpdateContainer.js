@@ -49,22 +49,26 @@ const GroupUpdateContainer = ({ params }) => {
   const onReset = useCallback(() => setForm(initialForm), []);
 
   const onSubmit = useCallback(
-    async (e) => {
+    (e) => {
       e.preventDefault();
-      try {
-        if (pgmSeq) {
-          // 프로그램 수정
-          await apiUpdateGroupCounseling(pgmSeq, form);
-          console.log('프로그램 수정 완료');
-        } else {
-          // 프로그램 등록
-          await apiRegisterGroupCounseling(form);
-          console.log('프로그램 등록 완료');
+      console.log('form', form);
+      return;
+      (async () => {
+        try {
+          if (pgmSeq) {
+            // 프로그램 수정
+            await apiUpdateGroupCounseling(pgmSeq, form);
+            console.log('프로그램 수정 완료');
+          } else {
+            // 프로그램 등록
+            await apiRegisterGroupCounseling(form);
+            console.log('프로그램 등록 완료');
+          }
+        } catch (error) {
+          console.error('저장 실패:', error);
+          // 에러 처리 로직 추가
         }
-      } catch (error) {
-        console.error('저장 실패:', error);
-        // 에러 처리 로직 추가
-      }
+      })();
     },
     [form, pgmSeq],
   );
@@ -75,6 +79,7 @@ const GroupUpdateContainer = ({ params }) => {
       errors={errors}
       onChange={onChange}
       onReset={onReset}
+      onClick={onClick}
       status={status}
       onSubmit={onSubmit}
     />

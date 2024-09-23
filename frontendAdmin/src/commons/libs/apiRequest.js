@@ -33,6 +33,5 @@ export default function apiRequest(url, method = 'GET', data, headers) {
   if (headers) {
     options.headers = headers;
   }
-  console.log('options', options);
   return axios(options);
 }
