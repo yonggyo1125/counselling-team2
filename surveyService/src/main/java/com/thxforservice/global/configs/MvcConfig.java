@@ -9,4 +9,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableJpaAuditing
 @EnableDiscoveryClient
 public class MvcConfig implements WebMvcConfigurer {
+
+
 }

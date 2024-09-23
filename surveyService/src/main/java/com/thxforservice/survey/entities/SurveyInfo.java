@@ -8,17 +8,20 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+import java.util.Map;
+
 @Data
 @Entity
 @Builder
 @NoArgsConstructor @AllArgsConstructor
-@JsonIgnoreProperties(ignoreUnknown = true)
 @Table(name="SELF_ASMT_SRVY_INFO")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class SurveyInfo extends BaseMemberEntity {
     @Id @GeneratedValue
     private Long srvyNo;
 
-    @Column(length=45)
+    @Column(length = 45)
     private String gid;
 
     @Column(nullable = false)
@@ -35,4 +38,9 @@ public class SurveyInfo extends BaseMemberEntity {
     @Lob
     private String criteriaInfo; // 기준 시작, 종료 점수, 결과 내용 json
 
+    @Transient
+    public List<SurveyQuestion> questions;
+
+    @Transient
+    public List<Map<String, String>> _criteriaInfo;
 }

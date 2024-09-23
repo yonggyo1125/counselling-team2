@@ -6,7 +6,8 @@ import org.springframework.http.HttpStatus;
 
 public class SurveyInfoNotFoundException extends CommonException {
     public SurveyInfoNotFoundException() {
-        super("NotFound.survey", HttpStatus.NOT_FOUND);
+        super("Not.Black", HttpStatus.NOT_FOUND);
         setErrorCode(true);
     }
+
 }

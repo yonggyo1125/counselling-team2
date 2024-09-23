@@ -35,8 +35,6 @@ public class QSurveyResult extends EntityPathBase<SurveyResult> {
     //inherited
     public final DateTimePath<java.time.LocalDateTime> deletedAt = _super.deletedAt;
 
-    public final StringPath email = createString("email");
-
     //inherited
     public final DateTimePath<java.time.LocalDateTime> modifiedAt = _super.modifiedAt;
 

@@ -118,4 +118,9 @@ public class Pagination {
         this.limit = limit;
         this.request = request;
     }
+
+    public Pagination( int total, HttpServletRequest request) {
+        this.total = total;
+        this.request = request;
+    }
 }

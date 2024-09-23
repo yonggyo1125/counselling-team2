@@ -3,6 +3,9 @@ package com.thxforservice.survey.entities;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
 
 @Data
 @Entity
@@ -27,4 +30,7 @@ public class SurveyQuestion {
     // 문항1....^^1점||문항2......^^2점||문항3...^^3점
     @Lob
     private String questions; // 문항, 문항의 점수 json
+
+
+
 }

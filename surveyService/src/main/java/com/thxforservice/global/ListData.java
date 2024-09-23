@@ -15,6 +15,7 @@ public class ListData<T> {
     private List<T> data;
     private List<T> items; // 목록 데이터
     private Pagination pagination;
+    private int totalCount;
 
     // 명시적으로 생성자 추가
     public ListData(List<T> data) {
@@ -24,6 +25,11 @@ public class ListData<T> {
     public ListData(List<T> items, Pagination pagination) {
         this.items = items;
         this.pagination = pagination;
+    }
+
+    public ListData(List<T> items, int totalCount) {
+        this.items = items;
+        this.totalCount = totalCount;
     }
 
 }

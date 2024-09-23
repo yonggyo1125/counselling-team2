@@ -1,5 +1,6 @@
 package com.thxforservice.member;
 
+import com.thxforservice.member.entities.Member;
 import lombok.Builder;
 import lombok.Data;
 import com.thxforservice.member.entities.Member;

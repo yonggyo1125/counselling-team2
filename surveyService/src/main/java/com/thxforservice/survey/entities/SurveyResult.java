@@ -2,10 +2,16 @@ package com.thxforservice.survey.entities;
 
 import com.thxforservice.global.entities.BaseMemberEntity;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.List;
+import java.util.Map;
 
 @Data
 @Entity
+@NoArgsConstructor @AllArgsConstructor
 @Table(name="SRVY_ANS_RSLT")
 public class SurveyResult extends BaseMemberEntity {
 
@@ -19,9 +25,6 @@ public class SurveyResult extends BaseMemberEntity {
 
     private Long studentNo;
 
-    @Column(length=80, nullable = false)
-    private String email; // 로그인 회원 이메일
-
     @Column(length=40, nullable = false)
     private String username; // 로그인 회원명
 
@@ -30,5 +33,6 @@ public class SurveyResult extends BaseMemberEntity {
 
     private Long totScr; // 총 점수
 
-
+    @Transient
+    public List<Map<Long, Integer>> _answerData;
 }

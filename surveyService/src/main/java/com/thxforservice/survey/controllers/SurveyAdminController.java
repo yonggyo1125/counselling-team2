@@ -1,10 +1,10 @@
 package com.thxforservice.survey.controllers;
 
 import com.thxforservice.global.Utils;
-import com.thxforservice.global.exceptions.BadRequestException;
-import com.thxforservice.survey.services.SurveySaveService;
-import com.thxforservice.survey.validators.SurveyValidator;
+import com.thxforservice.global.rests.JSONData;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -20,8 +20,6 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class SurveyAdminController {
 
-    private final SurveySaveService surveySaveService;
-    private final SurveyValidator surveyValidator;
     private final HttpServletRequest request;
     private final Utils utils;
 
@@ -32,20 +30,27 @@ public class SurveyAdminController {
         String method = request.getMethod().toUpperCase();
         form.setMode(method.equals("PATCH") ? "update" : "write");
 
-        surveyValidator.validate(form, errors);
-
-        if (errors.hasErrors()) {
-            throw new BadRequestException(utils.getErrorMessages(errors));
-        }
-
-        // 추가, 수정 처리
-        surveySaveService.save(form);
 
         HttpStatus status = method.equals("POST") ? HttpStatus.CREATED : HttpStatus.OK;
         return ResponseEntity.status(status).build();
     }
 
 
+    @Operation(summary = "답변 삭제", method = "DELETE")
+    @ApiResponse(responseCode = "200")
+    @Parameter(name = "prgrsNo", required = true, description = "경로변수, 답변 등록 번호")
+    @DeleteMapping("/{prgrsNo}")
+    public void delete(@PathVariable("prgrsNo") Long prgrsNo) {
+
+    }
+
+    @Operation(summary = "설문지 목록", method = "GET")
+    @ApiResponse(responseCode = "200")
+    @GetMapping
+    public JSONData list() {
 
 
+        // 결과를 JSONData로 변환하여 반환
+        return null;
+    }
 }

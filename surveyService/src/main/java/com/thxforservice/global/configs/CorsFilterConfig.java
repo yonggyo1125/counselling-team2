@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class CorsFilterConfig {
@@ -22,14 +24,16 @@ public class CorsFilterConfig {
         CorsConfiguration config = new CorsConfiguration();
         config.addAllowedMethod("*"); // 모든 요청 메서드 허용
         config.addAllowedHeader("*"); // 모든 요청 헤더 허용
-        if (!allowedOrigins.equals("*")) {
-            config.setAllowCredentials(true);
-        }
-        config.addAllowedOrigin(allowedOrigins);
+//        if (!allowedOrigins.equals("*")) {
+//            config.setAllowCredentials(true);
+//        }
+//        config.addAllowedOrigin(allowedOrigins);
         config.addExposedHeader("*");
 
         source.registerCorsConfiguration("/**", config);
 
         return new CorsFilter(source);
     }
+
+
 }
