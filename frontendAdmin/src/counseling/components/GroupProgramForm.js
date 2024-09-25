@@ -46,7 +46,6 @@ const GroupProgramForm = ({
   status,
 }) => {
   const { t } = useTranslation();
-
   return (
     <FormBox autoComplete="off" onSubmit={onSubmit}>
       <dl>
@@ -91,7 +90,9 @@ const GroupProgramForm = ({
             value={form?.programStartDate ?? ''}
             onChange={onChange}
           />
-          <StyledMessage variant="danger">{errors?.programStartDate}</StyledMessage>
+          <StyledMessage variant="danger">
+            {errors?.programStartDate}
+          </StyledMessage>
         </dd>
       </dl>
       <dl>
@@ -103,7 +104,9 @@ const GroupProgramForm = ({
             value={form?.programStartTime ?? ''}
             onChange={onChange}
           />
-          <StyledMessage variant="danger">{errors?.programStartTime}</StyledMessage>
+          <StyledMessage variant="danger">
+            {errors?.programStartTime}
+          </StyledMessage>
         </dd>
       </dl>
       <dl>
