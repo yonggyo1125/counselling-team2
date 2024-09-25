@@ -139,24 +139,25 @@ const MypageProfileContainer = () => {
     },
     [setUserInfo],
   );
-
   return (
-    <>
-      <ProfileImage
-        gid={form?.gid}
-        fileUploadCallback={fileUploadCallback}
-        profileImage={form?.profileImage}
-      />
-      <ProfileForm
-        form={form}
-        onSubmit={onSubmit}
-        onChange={onChange}
-        onToggle={onToggle}
-        errors={errors}
-        skey={skey}
-        professors={professors}
-      />
-    </>
+    userInfo && (
+      <>
+        <ProfileImage
+          gid={userInfo?.gid}
+          fileUploadCallback={fileUploadCallback}
+          profileImage={userInfo?.profileImage}
+        />
+        <ProfileForm
+          form={form}
+          onSubmit={onSubmit}
+          onChange={onChange}
+          onToggle={onToggle}
+          errors={errors}
+          skey={skey}
+          professors={professors}
+        />
+      </>
+    )
   );
 };
 
