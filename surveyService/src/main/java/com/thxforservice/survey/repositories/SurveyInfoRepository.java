@@ -10,5 +10,4 @@ import java.util.Optional;
 @Repository
 public interface SurveyInfoRepository extends JpaRepository<SurveyInfo, Long> , QuerydslPredicateExecutor<SurveyInfo> {
 
-    Optional<SurveyInfo> findBySrvyNo(Long srvyNo);
 }

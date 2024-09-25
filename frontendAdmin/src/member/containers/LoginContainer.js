@@ -72,10 +72,9 @@ const LoginContainer = ({ searchParams }) => {
                * 예) /member/login?redirectURL=로그인 이후 이동할 경로
                *
                */
-
               setForm({});
-              //const redirectURL = searchParams?.redirectUrl || '/';
-              //router.replace(redirectURL);
+              const redirectURL = searchParams?.redirectUrl || '/';
+              router.replace(redirectURL);
             } catch (err) {
               console.error(err);
             }
@@ -89,6 +88,8 @@ const LoginContainer = ({ searchParams }) => {
     },
     [
       form,
+      router,
+      searchParams,
       setIsAdmin,
       setIsCounselor,
       setIsLogin,

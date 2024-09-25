@@ -33,7 +33,6 @@ export const apiUser = () =>
         resolve(res.data.data);
       })
       .catch((err) => {
-        console.log(err);
         cookies.remove('token', { path: '/' });
         reject(err);
       });
