@@ -15,6 +15,8 @@ const MypageProfileContainer = () => {
   } = useContext(UserInfoContext);
 
   const initialForm = userInfo;
+  initialForm.professorInfo = userInfo?.professor;
+  initialForm.professor = userInfo?.professor?.memberSeq;
   delete initialForm.password;
 
   const [form, setForm] = useState(initialForm);
@@ -30,6 +32,12 @@ const MypageProfileContainer = () => {
     const value = e.target.value;
     if (name === 'skey') {
       setSkey(value);
+      if (!value || !value.trim()) {
+        setForm((form) => ({
+          ...form,
+          professor: form?.professorInfo?.memberSeq,
+        }));
+      }
     } else {
       setForm((form) => ({ ...form, [name]: value }));
     }
@@ -39,14 +47,13 @@ const MypageProfileContainer = () => {
     setForm((form) => ({ ...form, [name]: value }));
   }, []);
 
-
   useEffect(() => {
     (async () => {
       try {
         const professors = await getProfessors(skey);
         setProfessors(professors);
         if (professors && professors.length > 0) {
-          setForm((form) => ({ ...form, professor: professors[0].seq }));
+          setForm((form) => ({ ...form, professor: professors[0].memberSeq }));
         }
       } catch (err) {
         console.error(err);
