@@ -1,5 +1,3 @@
-import { save } from 'react-cookies';
-import requestData from '../../commons/libs/requestData';
 import saveProcess from '@/commons/libs/saveProcess';
 import apiRequest from '@/commons/libs/apiRequest';
 
@@ -7,12 +5,11 @@ import apiRequest from '@/commons/libs/apiRequest';
 export const updateProfile = (form) =>
   saveProcess('/member/mypage/profile', 'PATCH', form);
 
-
 export const updateProfile2 = async (form) => {
-    try {
-      const response = await apiRequest('/member/mypage/profile', 'PATCH', form);
-      return response;
-    } catch (error) {
-      handleApiError(error);
-    }
-  };
+  try {
+    const response = await apiRequest('/member/mypage/profile', 'PATCH', form);
+    return response;
+  } catch (error) {
+    handleApiError(error);
+  }
+};

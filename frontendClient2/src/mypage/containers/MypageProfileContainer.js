@@ -14,7 +14,7 @@ const MypageProfileContainer = () => {
     actions: { setUserInfo },
   } = useContext(UserInfoContext);
 
-  const initialForm = userInfo;
+  const initialForm = { ...userInfo };
   initialForm.professorInfo = userInfo?.professor;
   initialForm.professor = userInfo?.professor?.memberSeq;
   delete initialForm.password;
@@ -105,7 +105,6 @@ const MypageProfileContainer = () => {
       (async () => {
         try {
           const res = await updateProfile(form);
-          console.log('Res', res);
           // 회원 정보 수정 완료 후 -> context api 쪽 정보 업데이트
           // form 초기화, 마이페이지 메인으로 이동
           setUserInfo(res);

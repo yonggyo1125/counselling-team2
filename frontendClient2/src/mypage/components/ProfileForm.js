@@ -92,7 +92,7 @@ const ProfileForm = ({
   professors,
 }) => {
   const { t } = useTranslation();
-
+  console.log('form', form);
   return (
     <Container>
       <FormBox onSubmit={onSubmit} autoComplete="off">
